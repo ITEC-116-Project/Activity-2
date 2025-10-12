@@ -1,0 +1,151 @@
+/* src/styles/Register.css */
+
+* {
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    margin: 0;
+    background: linear-gradient(135deg, #11998e, #38ef7d);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.register-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.register-box {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px 50px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 350px;
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+.register-box h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.register-input {
+    margin: 10px 0;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    font-size: 15px;
+    transition: border 0.3s;
+}
+
+.register-input:focus {
+    border-color: #2575fc;
+}
+
+.register-button {
+    margin-top: 15px;
+    padding: 12px;
+    background: linear-gradient(90deg, #2575fc, #6a11cb);
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.register-button:hover {
+    background: linear-gradient(90deg, #6a11cb, #2575fc);
+}
+
+.register-login-text {
+    margin-top: 15px;
+    color: #555;
+}
+
+.register-login-text a {
+    color: #2575fc;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.register-login-text a:hover {
+    text-decoration: underline;
+}
+
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-wrapper .register-input {
+    width: 100%;
+    padding-right: 40px;
+    /* space for eye icon */
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    cursor: pointer;
+    color: #777;
+    transition: color 0.3s;
+}
+
+.toggle-password:hover {
+    color: #2575fc;
+}
+
+.password-hint {
+    font-size: 13px;
+    margin-top: 5px;
+    text-align: left;
+}
+
+.password-hint.error {
+    color: #e74c3c;
+}
+
+.password-hint.success {
+    color: #2ecc71;
+}
+
+.Toastify__toast--success {
+    background: linear-gradient(90deg, #2575fc, #6a11cb);
+    color: white;
+    font-weight: 500;
+    border: 3px solid aliceblue;
+}
+
+.Toastify__toast--error {
+    background: #e74c3c;
+    color: white;
+    font-weight: 500;
+    border: 3px solid aliceblue;
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

@@ -1,0 +1,249 @@
+/* src/styles/NotesDashboard.css */
+
+* {
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    margin: 0;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    /* Keep gradient */
+    min-height: 100vh;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notes-container {
+    width: 95%;
+    max-width: 1300px;
+    /* Increased width for more horizontal space */
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 50px 60px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.8s ease-in-out;
+    overflow-x: auto;
+    /* Allows scrolling horizontally if many notes */
+    white-space: normal;
+}
+
+.notes-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.logout-icon-btn {
+    position: absolute;
+    bottom: 25px;
+    right: 25px;
+    background: linear-gradient(90deg, #ff4b2b, #ff416c);
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+.logout-icon-btn:hover {
+    transform: scale(1.1);
+    opacity: 0.9;
+}
+
+/* Ensure the container is positioned relative */
+.notes-container {
+    position: relative;
+    /* ✅ Add this line */
+}
+
+.note-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.note-input,
+.note-textarea {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-size: 15px;
+    transition: border 0.3s;
+}
+
+.note-input:focus,
+.note-textarea:focus {
+    border-color: #6a11cb;
+}
+
+.note-textarea {
+    height: 90px;
+    resize: none;
+}
+
+.note-submit-btn {
+    align-self: flex-start;
+    /* ✅ keep button on the left */
+    background: linear-gradient(90deg, #6a11cb, #2575fc);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    /* ✅ smaller button */
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+    transition: opacity 0.3s, transform 0.2s;
+}
+
+.note-submit-btn:hover {
+    opacity: 0.85;
+    transform: scale(1.03);
+}
+
+.notes-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+
+.note-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: left;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    word-wrap: break-word;
+    /* prevents long text overflow */
+}
+
+.note-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    width: 500px;
+    /* Fixed width for even columns */
+    text-align: left;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+    /* Prevents shrinking when screen gets smaller */
+}
+
+.note-card:hover {
+    transform: translateY(-3px);
+}
+
+.note-card h4 {
+    color: #6a11cb;
+    margin-bottom: 5px;
+}
+
+.note-card p {
+    color: #444;
+    font-size: 15px;
+}
+
+.note-actions {
+    margin-top: 10px;
+}
+
+.edit-btn,
+.delete-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 8px;
+    font-weight: 500;
+    transition: opacity 0.3s;
+}
+
+.edit-btn {
+    background: #007bff;
+    color: white;
+}
+
+.edit-btn:hover {
+    opacity: 0.85;
+}
+
+.delete-btn {
+    background: #dc3545;
+    color: white;
+}
+
+.delete-btn:hover {
+    opacity: 0.85;
+}
+
+/* 🧩 Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 📱 Responsive Layout */
+@media (max-width: 1024px) {
+    .notes-container {
+        padding: 40px 50px;
+    }
+}
+
+@media (max-width: 768px) {
+    .notes-container {
+        width: 95%;
+        padding: 30px 40px;
+    }
+
+    .notes-list {
+        grid-template-columns: repeat(2, 1fr);
+        /* Two columns for tablets */
+    }
+}
+
+@media (max-width: 500px) {
+    .notes-container {
+        width: 95%;
+        padding: 25px 25px;
+    }
+
+    .notes-list {
+        grid-template-columns: 1fr;
+        /* Single column for phones */
+    }
+
+    .note-card {
+        padding: 15px;
+    }
+
+    .logout-btn {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+}
