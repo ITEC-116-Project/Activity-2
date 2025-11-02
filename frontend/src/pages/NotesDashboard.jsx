@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { getNotes, addNote, deleteNote, updateNote } from "../api/api";
 import { useNavigate } from "react-router-dom";
 import { LogOut } from "lucide-react"; // ✅ import icon
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "../style/NotesDashboard.css"; // make sure this line exists
 
 function NotesDashboard() {
@@ -23,20 +25,31 @@ function NotesDashboard() {
   };
 
   const handleAddOrEdit = async () => {
-    if (editNote) {
-      await updateNote(editNote.id, { title, content });
-      setEditNote(null);
-    } else {
-      await addNote({ userId: user.id, title, content });
+    try {
+      if (editNote) {
+        await updateNote(editNote.id, { title, content });
+        toast.success("Note updated");
+        setEditNote(null);
+      } else {
+        await addNote({ userId: user.id, title, content });
+        toast.success("Note added");
+      }
+      setTitle("");
+      setContent("");
+      setTimeout(loadNotes, 200);
+    } catch (err) {
+      toast.error("Failed to save note");
     }
-    setTitle("");
-    setContent("");
-    setTimeout(loadNotes, 200);
   };
 
   const handleDelete = async (id) => {
-    await deleteNote(id);
-    loadNotes();
+    try {
+      await deleteNote(id);
+      toast.success("Note deleted");
+      loadNotes();
+    } catch (err) {
+      toast.error("Failed to delete note");
+    }
   };
 
   const handleLogout = () => {
@@ -91,6 +104,7 @@ function NotesDashboard() {
       <button className="logout-icon-btn" onClick={handleLogout}>
         <LogOut size={22} />
       </button>
+      <ToastContainer />
     </div>
   );
 }

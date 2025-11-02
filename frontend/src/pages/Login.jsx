@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { loginUser } from "../api/api";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react"; // 👈 install: npm install lucide-react
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "../style/Login.css";
 
 function Login() {
@@ -15,9 +17,12 @@ function Login() {
     try {
       const res = await loginUser({ username, password });
       localStorage.setItem("user", JSON.stringify(res.data));
-      navigate("/notes");
+      toast.success("Logged in successfully", {
+        onClose: () => navigate("/notes"),
+        autoClose: 800,
+      });
     } catch (err) {
-      alert("Invalid username or password");
+      toast.error("Invalid username or password");
     }
   };
 
@@ -58,6 +63,8 @@ function Login() {
         <p className="login-register-text">
           No account? <a href="/register">Register</a>
         </p>
+        {/* Toast container for login toasts */}
+        <ToastContainer />
       </div>
     </div>
   );
