@@ -10,7 +10,7 @@ import { NotesAct2Module } from './notes-act2/notes-act2.module';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: 'root',
+      password: '',
       database: 'itec_116_db',
       autoLoadEntities: true,
       synchronize: true,
