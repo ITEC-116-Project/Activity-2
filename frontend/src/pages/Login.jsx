@@ -19,7 +19,7 @@ function Login() {
       localStorage.setItem("user", JSON.stringify(res.data));
       toast.success("Logged in successfully", {
         onClose: () => navigate("/notes"),
-        autoClose: 800,
+        autoClose: 500,
       });
     } catch (err) {
       toast.error("Invalid username or password");

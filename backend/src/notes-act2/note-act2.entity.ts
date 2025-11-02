@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { UserAct2 } from 'src/auth-act2/entities/user-act2.entity';
 
 
@@ -12,10 +12,12 @@ export class NoteAct2 {
 
   @Column({ type: 'text' })
   content: string;
+  @ManyToOne(() => UserAct2, (user) => user.notes, { onDelete: 'CASCADE' })
+  user: UserAct2;
 
   @CreateDateColumn()
   created_at: Date;
 
-  @ManyToOne(() => UserAct2, (user) => user.notes, { onDelete: 'CASCADE' })
-  user: UserAct2;
+  @UpdateDateColumn({ nullable: true })
+  updated_at: Date;
 }

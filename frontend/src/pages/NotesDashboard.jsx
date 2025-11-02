@@ -24,19 +24,83 @@ function NotesDashboard() {
     setNotes(res.data);
   };
 
+  const formatNoteDate = (note) => {
+    if (!note) return "";
+
+    // First check common timestamp fields
+    const candidates = [
+      "createdAt",
+      "updatedAt",
+      "date",
+      "timestamp",
+      "created_at",
+      "updated_at",
+      "created",
+      "updated",
+    ];
+    for (const k of candidates) {
+      if (note[k]) {
+        const d = new Date(note[k]);
+        if (!isNaN(d)) return d.toLocaleString();
+      }
+    }
+
+    // Fallback: scan all fields and try to parse any value to a Date
+    for (const key of Object.keys(note)) {
+      try {
+        const val = note[key];
+        // skip objects/arrays
+        if (val === null) continue;
+        if (typeof val === "string" || typeof val === "number") {
+          const d = new Date(val);
+          if (!isNaN(d)) return d.toLocaleString();
+        }
+      } catch (e) {
+        // ignore parsing errors
+      }
+    }
+
+    return "";
+  };
+
+  const getCreatedDate = (note) => {
+    const keys = ["created_at", "createdAt", "created", "date"];
+    for (const k of keys) if (note[k]) {
+      const d = new Date(note[k]);
+      if (!isNaN(d)) return d.toLocaleString();
+    }
+    return "";
+  };
+
+  const getUpdatedDate = (note) => {
+    const keys = ["updated_at", "updatedAt", "updated", "timestamp"];
+    for (const k of keys) if (note[k]) {
+      const d = new Date(note[k]);
+      if (!isNaN(d)) return d.toLocaleString();
+    }
+    return "";
+  };
+
   const handleAddOrEdit = async () => {
     try {
       if (editNote) {
-        await updateNote(editNote.id, { title, content });
+        const res = await updateNote(editNote.id, { title, content });
+        const updated = res.data;
         toast.success("Note updated");
+        // update local state immediately
+        setNotes((prev) => prev.map((n) => (n.id === updated.id ? updated : n)));
         setEditNote(null);
       } else {
-        await addNote({ userId: user.id, title, content });
+        const res = await addNote({ userId: user.id, title, content });
+        const created = res.data;
         toast.success("Note added");
+        // prepend the newly created note so user sees it immediately
+        setNotes((prev) => [created, ...prev]);
       }
       setTitle("");
       setContent("");
-      setTimeout(loadNotes, 200);
+      // fallback: refresh from server after short delay to ensure consistency
+      setTimeout(loadNotes, 400);
     } catch (err) {
       toast.error("Failed to save note");
     }
@@ -46,7 +110,8 @@ function NotesDashboard() {
     try {
       await deleteNote(id);
       toast.success("Note deleted");
-      loadNotes();
+      // remove from local state immediately
+      setNotes((prev) => prev.filter((n) => n.id !== id));
     } catch (err) {
       toast.error("Failed to delete note");
     }
@@ -95,6 +160,24 @@ function NotesDashboard() {
             <div className="note-actions">
               <button onClick={() => handleEdit(n)} className="edit-btn">Edit</button>
               <button onClick={() => handleDelete(n.id)} className="delete-btn">Delete</button>
+            </div>
+            <div className="note-footer">
+              <div>
+                {(() => {
+                  const created = getCreatedDate(n);
+                  const updated = getUpdatedDate(n);
+
+                  // Show "Updated" only if updated date is different from created date
+                  if (updated && created && updated !== created)
+                    return <div className="note-date">Updated: {updated}</div>;
+
+                  // Otherwise, show "Created"
+                  if (created)
+                    return <div className="note-date">Created: {created}</div>;
+
+                  return null;
+                })()}
+              </div>
             </div>
           </li>
         ))}

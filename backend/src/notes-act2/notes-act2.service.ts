@@ -33,8 +33,10 @@ export class NotesAct2Service {
   }
 
   async update(id: number, data: Partial<NoteAct2>) {
-    await this.notesRepo.update(id, data);
-    return this.notesRepo.findOne({ where: { id } });
+    const note = await this.notesRepo.findOne({ where: { id } });
+    if (!note) throw new Error('Note not found');
+    Object.assign(note, data);
+    return this.notesRepo.save(note);
   }
 
   async delete(id: number) {
