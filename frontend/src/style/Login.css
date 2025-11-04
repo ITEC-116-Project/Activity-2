@@ -58,7 +58,7 @@ body {
 .login-button {
     margin-top: 15px;
     padding: 12px;
-    background: linear-gradient(90deg, #2575fc, #6a11cb);
+    background: linear-gradient(90deg, #6a7b86, #d4c5cf);
     color: white;
     font-weight: 600;
     border: none;
@@ -68,7 +68,7 @@ body {
 }
 
 .login-button:hover {
-    background: linear-gradient(90deg, #6a11cb, #2575fc);
+    background: linear-gradient(180deg, #6a7b86, #d4c5cf);
 }
 
 .login-register-text {

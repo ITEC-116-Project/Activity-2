@@ -6,7 +6,7 @@
 
 body {
     margin: 0;
-    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    background: linear-gradient(135deg, #6a7b86, #d4c5cf);
     /* Keep gradient */
     min-height: 100vh;
     color: #333;
@@ -95,7 +95,7 @@ body {
 .note-submit-btn {
     align-self: flex-start;
     /* ✅ keep button on the left */
-    background: linear-gradient(90deg, #6a11cb, #2575fc);
+    background: linear-gradient(360deg, #6a7b86, #d4c5cf);
     color: white;
     border: none;
     padding: 8px 16px;
